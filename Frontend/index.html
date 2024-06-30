@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System</title>
+</head>
+<body>
+    <h1>Event Management System</h1>
+    <form id="addEventForm">
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName" name="eventName" required><br><br>
+
+        <label for="eventDate">Date:</label>
+        <input type="date" id="eventDate" name="eventDate" required><br><br>
+
+        <label for="eventTime">Time:</label>
+        <input type="time" id="eventTime" name="eventTime" required><br><br>
+
+        <label for="eventLocation">Location:</label>
+        <input type="text" id="eventLocation" name="eventLocation" required><br><br>
+
+        <label for="participantLimit">Participant Limit:</label>
+        <input type="number" id="participantLimit" name="participantLimit" required><br><br>
+
+        <button type="submit">Add Event</button>
+    </form>
+
+    <script>
+        document.getElementById('addEventForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const eventDetails = {
+                eventName: formData.get('eventName'),
+                eventDate: formData.get('eventDate'),
+                eventTime: formData.get('eventTime'),
+                eventLocation: formData.get('eventLocation'),
+                participantLimit: formData.get('participantLimit')
+            };
+
+            fetch('http://localhost:5000/events/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(eventDetails)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                } else {
+                    alert(data.message);
+                    document.getElementById('addEventForm').reset();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
