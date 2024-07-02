@@ -2,7 +2,7 @@
 # empty dictionary to store participants by event ID
 participants = {}
 
-# Function to register a participant for an event
+# register a participant for an event
 def register_participant(event_id, participant_details):
     if event_id in participants:
         if len(participants[event_id]) >= events[event_id]['participant_limit']:
@@ -11,7 +11,7 @@ def register_participant(event_id, participant_details):
     else:
         raise ValueError(f"Event with ID {event_id} not found.")
 
-# Function to remove a participant from an event
+# remove a participant from an event
 def remove_participant(event_id, participant_id):
     if event_id in participants:
         for participant in participants[event_id]:
@@ -22,7 +22,7 @@ def remove_participant(event_id, participant_id):
     else:
         raise ValueError(f"Event with ID {event_id} not found.")
 
-# Function to display participants for an event
+# display participants for an event
 def display_participants(event_id):
     if event_id in participants:
         return participants[event_id]
